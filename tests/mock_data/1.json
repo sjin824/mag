@@ -1,0 +1,7 @@
+{
+    "text_list": [
+      "Hello world. This is a test. Another sentence.",
+      "This should be in the batch 2. And this is another sentence in batch 2."
+    ],
+    "batch": 1
+}

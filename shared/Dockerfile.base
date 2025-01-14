@@ -1,0 +1,16 @@
+# 使用Python 基础镜像
+FROM python:3.9.19
+
+# 设置工作目录
+WORKDIR /base
+
+# 安装常用依赖
+COPY shared/shared_requirements.txt .
+RUN pip install --no-cache-dir -r shared_requirements.txt
+
+# 提示镜像的基础用途
+LABEL maintainer="Siyu Jin <syjin824@gmail.com>"
+LABEL description="Base image for all API services"
+
+# 默认行为：打印基础镜像信息
+CMD ["echo", "Base image for API services"]
