@@ -1,8 +1,5 @@
 from flask import Blueprint, request, jsonify, stream_with_context, Response
 
-
-
-
 nlp_bp = Blueprint('nlp', __name__)
 spacy_nlp = spacy.load('en_core_web_lg')
 stanza_nlp = stanza.Pipeline(lang='en', processors='tokenize,pos,constituency')

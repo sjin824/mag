@@ -1,2 +1,2 @@
 # mag
-Siyu's Master Thesis
+Siyu's Master Thesis, based on Docker
