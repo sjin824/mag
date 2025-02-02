@@ -3,13 +3,14 @@ FROM meg-base:1.0
 # 设置工作目录
 WORKDIR /app
 
-# 拷贝依赖文件和代码
+# 拷贝+安装依赖文件
 COPY requirements.txt ./requirements.txt
-
-# 安装依赖
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Load apacy & stanza models
+# 下载spaCy, stanza模型
+RUN python -m spacy download en_core_web_lg
+
+# Load spacy & stanza models
 COPY load_model.py ./
 RUN python load_model.py
 

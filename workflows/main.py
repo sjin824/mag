@@ -4,7 +4,7 @@ import requests
 import argparse
 import os
 
-# Functool of read_docs: Input formatting
+# Util for read_docs: Input formatting
 def doc_2_list(document: Union[str, List[str]]) -> List[str]:
     '''
     Given a complete document in str/List[str] format, transfer into formatted json as standard input
@@ -18,7 +18,7 @@ def doc_2_list(document: Union[str, List[str]]) -> List[str]:
     elif isinstance(document, list):
         return [" ".join(document)]
 
-# Functool of read_docs: Given a list of documents / or a document in .json format
+# Util for read_docs: Given a list of documents / or a document in .json format
 def list_2_json(documents: List[str], batch: int = 1) -> str:
     '''
     ["aaa bbb ccc"] -> {... "text_list": ["aaa bbb ccc",], ...} in json format
@@ -29,7 +29,7 @@ def list_2_json(documents: List[str], batch: int = 1) -> str:
     }
     return json.dumps(result, indent=2)
 
-# Generator input of main: Given a list of documents / or a document in .json format
+# A Generator as main input: Given a list of documents / or a document in .json format
 def read_docs(doc: Optional[str], doc_dir: Optional[str]) -> Generator[str, None, None]:
     if doc:
         yield json.loads(list_2_json(doc_2_list(doc)))
@@ -41,7 +41,7 @@ def read_docs(doc: Optional[str], doc_dir: Optional[str]) -> Generator[str, None
                 with open(_fp, 'r', encoding='utf-8') as file:
                     yield json.load(file)
                     
-# Functool of main: Get response from APIs
+# Util for main: Get response from APIs
 def get_response(api_url: str, json_data: dict):
     response = requests.post(
         api_url, 

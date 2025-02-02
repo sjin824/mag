@@ -9,34 +9,44 @@ services:
     image: meg-base:1.0
   
   # apis
-  simcse_api:
+  # simcse_api:
+  #   build:
+  #     context: ./apis/simcse/
+  #     dockerfile: Dockerfile
+  #   image: simcse_api:1.0     # 指定镜像名
+  #   depends_on:
+  #     - base
+  #   ports:
+  #     - "5002:5000"
+
+  # presumm_api:
+  #   build:
+  #     context: ./apis/presumm/
+  #     dockerfile: Dockerfile
+  #   image: presumm_api:1.0
+  #   depends_on:
+  #     - base
+  #   ports:
+  #     - "5003:5000"
+
+  nlp_api:
     build:
-      context: ./apis/simcse/
+      context: ./apis/nlp/
       dockerfile: Dockerfile
-    image: simcse_api:1.0     # 指定镜像名
+    image: nlp_api:1.0
     depends_on:
       - base
     ports:
-      - "5002:5000"
-
-  presumm_api:
-    build:
-      context: ./apis/presumm/
-      dockerfile: Dockerfile
-    image: presumm_api:1.0
-    depends_on:
-      - base
-    ports:
-      - "5003:5000"
-
+      - "5004:5000"
+      
   # gateway 网关
-  gateway:
-    build:
-      context: ./gateway/
-      dockerfile: Dockerfile
-    image: gateway:1.0  
-    ports:
-      - "8000:8000"
-    depends_on:
-      - simcse_api
-      - presumm_api
+  # gateway:
+  #   build:
+  #     context: ./gateway/
+  #     dockerfile: Dockerfile
+  #   image: gateway:1.0  
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - simcse_api
+  #     - presumm_api
