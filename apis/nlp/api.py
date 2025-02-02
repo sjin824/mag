@@ -109,17 +109,16 @@ def api_spacy(): # 改名?
         mimetype='application/jsonlines'
     )
     
-# @nlp_bp.route("/stanza", methods=["POST"])
-# @handle_api_errors
-# def api_stanza(): # 改名?
-#     data = request.get_json()
-#     text_list, batch_size = validate_request(data)
-#     stanza_doc = stanza_nlp(sent) 
+@nlp_bp.route("/stanza", methods=["POST"])
+@handle_api_errors
+def api_stanza(): # 改名?
+    data = request.get_json()
+    text_list, batch_size = validate_request(data)
     
-#     def process_batch_fn(batch_texts):
-#         return stanza_get_exts(batch_texts, is_NP=True, is_VP=True, is_upos=True)
+    def process_batch_fn(batch_texts):
+        return stanza_get_exts(batch_texts, is_NP=True, is_VP=True, is_upos=True)
     
-#     return Response(
-#         stream_with_context(batch_generator(text_list, batch_size, process_batch_fn)),
-#         mimetype='application/jsonlines'
-#     )
+    return Response(
+        stream_with_context(batch_generator(text_list, batch_size, process_batch_fn)),
+        mimetype='application/jsonlines'
+    )
