@@ -63,13 +63,7 @@ docker compose build --no-cache # --no-cache 可以确保每一步都重新拉�
 # --name指定一个容器的自定义名称，不然会变成系统默认名
 docker run -d --gpus all -p 5002:5000 --name simcse_gpu_run simcse_api:1.0
 docker run -d --gpus all -p 5003:5000 --name presumm_gpu_run presumm_api:1.0
-
+docker run -d --gpus all -p 5004:5000 --name nlp_gpu_run nlp_api:1.0
 
 # 3 Compose启动 - 无GPU需求部分，如gateway。 -d代表后台运行
 docker compose up -d gateway
-
-# simcse_api测试
-curl -v -H "Content-Type: application/json" -d '{"text_list":["Hello world. This is a test. Another sentence.", "This should be in the batch 2. And this is another sentence in batch 2."], "batch":1}' http://localhost:5002/simcse/nltk_sentence_tokenize
-curl -v -H "Content-Type: application/json" -d '{"fulltext":"Hello world. This is a test. Another sentence."}'      http://localhost:5002/simcse/rank_sentences
-curl -v -H "Content-Type: application/json" -d '{"fulltext":"Hello world. This is a test. Another sentence."}'      http://localhost:5002/simcse/nltk_sentence_tokenize
-curl -v -H "Content-Type: application/json" -d '{"fulltext":"The tomb of Kha and Merit is the funerary chapel and burial place of the ancient Egyptian foreman Kha and his wife Merit, in the northern cemetery of the workmen's village of Deir el-Medina. Kha supervised the workforce who constructed royal tombs during the reigns of the pharaohs Amenhotep II, Thutmose IV and Amenhotep III in the mid–Eighteenth Dynasty of the early New Kingdom of Egypt. He died in his 60s, while Merit died before him in her 20s or 30s. The couple's pyramid-shaped chapel has been known since at least 1818. The tomb was cut into the base of the cliffs. This position allowed the entrance to be quickly buried by debris deposited by landslides and later tomb construction, hiding its location from ancient robbers. Almost all of the contents of the tomb were awarded to the excavators and were shipped to Italy soon after the discovery. They have been displayed in the Museo Egizio in Turin since their arrival, and an entire gallery is devoted to them."}' http://localhost:5002/simcse/rank_sentences
