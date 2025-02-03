@@ -7,7 +7,7 @@ from handlers.spacy_handler import spacy_get_exts
 from handlers.stanza_handler import stanza_get_exts
 from handlers.simcse_handler import sentence_tokenize, rank_sentences
 
-nlp_bp = Blueprint('nlp', __name__)
+nlp_bp = Blueprint('nlp', __name__, url_prefix="/nlp")
 
 # Register available processors
 NLP_PROCESSORS = {
@@ -21,7 +21,7 @@ def handle_api_errors(func):
     """Decorator to handle API errors uniformly."""
     @wraps(func)
     def wrapper(*args, **kwargs):
-        try:
+            try:
             return func(*args, **kwargs)
         except ValueError as ve:
             return jsonify({"error": str(ve)}), 400
