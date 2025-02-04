@@ -21,7 +21,7 @@ def handle_api_errors(func):
     """Decorator to handle API errors uniformly."""
     @wraps(func)
     def wrapper(*args, **kwargs):
-            try:
+        try:
             return func(*args, **kwargs)
         except ValueError as ve:
             return jsonify({"error": str(ve)}), 400
