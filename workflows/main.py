@@ -71,8 +71,8 @@ def main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Test APIs with documents.")
     
-    parser.add_argument("--tokenizer_url", type=str, default="http://localhost:5002/simcse/nltk_sentence_tokenize", help="The URL of the tokenizer API. Default: %(default)s")
-    parser.add_argument("--ranker_url", type=str, default="http://localhost:5002/simcse/rank_by_fulltext", help="The URL of the sentence ranking API. Default: %(default)s")
+    parser.add_argument("--tokenizer_url", type=str, default="http://localhost:5002/nlp/simcse_tokenize", help="The URL of the tokenizer API. Default: %(default)s")
+    parser.add_argument("--ranker_url", type=str, default="http://localhost:5002/nlp/simcse_rank", help="The URL of the sentence ranking API. Default: %(default)s")
     
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--doc", type=str, nargs='*', help="A string to test.")

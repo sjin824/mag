@@ -63,7 +63,7 @@ docker compose build --no-cache # --no-cache 可以确保每一步都重新拉�
 # --name指定一个容器的自定义名称，不然会变成系统默认名
 
 docker run -d --gpus all -p 5002:5000 --name nlp_gpu_run nlp_api:1.0
-docker run -d --gpus all -p 5003:5000 --name presumm_gpu_run presumm_api:1.0
+# docker run -d --gpus all -p 5003:5000 --name presumm_gpu_run presumm_api:1.0
 # docker run -d --gpus all -p 5004:5000 --name simcse_gpu_run simcse_api:1.0
 
 # 3 Compose启动 - 无GPU需求部分，如gateway。 -d代表后台运行
