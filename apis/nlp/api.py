@@ -37,10 +37,10 @@ def api_handler(tool):
         return jsonify({"error": f"Unknown tool: {tool}"}), 400
 
     data = request.get_json()
-    text_list, batch_size = validate_request(data)
+    content, batch_size = validate_request(data)
     process_fn = NLP_PROCESSORS[tool]
 
     return Response(
-        stream_with_context(batch_generator(text_list, batch_size, process_fn)),
+        stream_with_context(batch_generator(content, batch_size, process_fn)),
         mimetype='application/jsonlines'
     )
