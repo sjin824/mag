@@ -2,3 +2,11 @@ nltk==3.9.1
 git+https://github.com/princeton-nlp/SimCSE.git
 spacy==3.8.3
 stanza==1.10.1
+
+
+# For decontextualizer
+tensorflow
+absl-py
+# numpy
+sentencepiece
+tensorflow_text
