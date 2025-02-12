@@ -6,6 +6,7 @@ from utils import validate_request, batch_generator
 from handlers.spacy_handler import spacy_get_exts
 from handlers.stanza_handler import stanza_get_exts
 from handlers.simcse_handler import sentence_tokenize, rank_sentences
+from handlers.decontextualizer_handler import decontextualize
 
 nlp_bp = Blueprint('nlp', __name__, url_prefix="/nlp")
 
@@ -14,7 +15,8 @@ NLP_PROCESSORS = {
     "spacy": spacy_get_exts,
     "stanza": stanza_get_exts,
     "simcse_tokenize": sentence_tokenize,
-    "simcse_rank": lambda batch_texts: rank_sentences(sentence_tokenize(batch_texts), batch_texts)
+    "simcse_rank": lambda batch_texts: rank_sentences(sentence_tokenize(batch_texts), batch_texts),
+    "decontextualize": decontextualize,
 }
 
 def handle_api_errors(func):

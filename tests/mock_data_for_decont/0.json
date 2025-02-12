@@ -1,0 +1,33 @@
+{
+    "content": [
+        {
+            "paragraph": [
+                "The tomb of Kha and Merit is the funerary chapel and burial place of the ancient Egyptian foreman Kha and his wife Merit, in the northern cemetery of the workmen's village of Deir el-Medina.",
+                "Kha supervised the workforce who constructed royal tombs during the reigns of the pharaohs Amenhotep II, Thutmose IV and Amenhotep III in the mid–Eighteenth Dynasty of the early New Kingdom of Egypt. ",
+                "He died in his 60s, while Merit died before him in her 20s or 30s. The couple's pyramid-shaped chapel has been known since at least 1818.",
+                "The tomb was cut into the base of the cliffs. This position allowed the entrance to be quickly buried by debris deposited by landslides and later tomb construction, hiding its location from ancient robbers.",
+                "Almost all of the contents of the tomb were awarded to the excavators and were shipped to Italy soon after the discovery.",
+                "They have been displayed in the Museo Egizio in Turin since their arrival, and an entire gallery is devoted to them."
+            ],
+            "page_title": "The tomb of Kha and Merit",
+            "section_title": "History", 
+            "target_sentence_idx": 5
+        },
+        {
+            "paragraph":[
+                "Gagarin was a keen sportsman and played ice hockey as a goalkeeper.",
+                "He was also a basketball fan and coached the Saratov Industrial Technical School team, as well as being a referee.",
+                "In 1957, while a cadet in flight school, Gagarin met Valentina Goryacheva at the May Day celebrations at the Red Square in Moscow.",
+                "She was a medical technician who had graduated from Orenburg Medical School.",
+                "They were married on 7 November of the same year, the same day Gagarin graduated from his flight school, and they had two daughters.",
+                "Yelena Yurievna Gagarina, born 1959, is an art historian who has worked as the director-general of the Moscow Kremlin Museums since 2001; and Galina Yurievna Gagarina, born 1961, is a professor of economics and the department chair at Plekhanov Russian University of Economics in Moscow."
+                ],
+            "page_title": "Yuri Gagarin",
+            "section_title": "Personal Life",
+            "target_sentence_idx": 4
+        }
+        
+    ],
+    "batch": 2
+  }
+  
