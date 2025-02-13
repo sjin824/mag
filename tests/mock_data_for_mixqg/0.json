@@ -1,0 +1,14 @@
+{
+    "content":[
+        {
+            "context":"The capital of France is Paris.",
+            "answers":["captital", "France", "Paris"]
+
+        },
+        {
+            "context":"Gagarin was a keen sportsman and played ice hockey as a goalkeeper.",
+            "answers":["Gagarin", "sportsman", "ice hockey", "goalkeeper"]
+        }
+    ],
+    "batch": 2
+}

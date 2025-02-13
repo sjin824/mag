@@ -24,7 +24,7 @@ SAVED_MODEL_PATH = '/app/tf_models/t5_base/1611267950'
 predict_fn = load_predict_fn(SAVED_MODEL_PATH)
 
 # Adapt the input to the model
-def create_input(paragraph,
+def format_input(paragraph,
                  target_sentence_idx,
                  page_title='',
                  section_title=''):
@@ -37,11 +37,11 @@ def create_input(paragraph,
 def decontextualize(batch_inputs):
     results = []
     for _input in batch_inputs:
-        created_input = create_input(
+        formatted_input = format_input(
             _input['paragraph'], 
             _input['target_sentence_idx'],
             _input.get('page_title', ''),
             _input.get('section_title', '')
         )
-        results.append(predict_fn([created_input])[0].decode('utf-8'))
+        results.append(predict_fn([formatted_input])[0].decode('utf-8'))
     return results

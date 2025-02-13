@@ -2,7 +2,7 @@ import spacy
 
 spacy_nlp = spacy.load('en_core_web_lg')
 
-def spacy_get_exts(batch_texts, is_noun_chunks=True, is_named_entities=True):
+def spacy_get_ents(batch_texts, is_noun_chunks=True, is_named_entities=True):
     results = []
     for spacy_doc in spacy_nlp.pipe(batch_texts):
         result = []

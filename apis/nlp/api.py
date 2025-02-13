@@ -3,20 +3,22 @@ from functools import wraps
 import json
 from utils import validate_request, batch_generator
 
-from handlers.spacy_handler import spacy_get_exts
-from handlers.stanza_handler import stanza_get_exts
+from handlers.spacy_handler import spacy_get_ents
+from handlers.stanza_handler import stanza_get_ents
 from handlers.simcse_handler import sentence_tokenize, rank_sentences
 from handlers.decontextualizer_handler import decontextualize
+from handlers.mixqg_handler import generate_question
 
 nlp_bp = Blueprint('nlp', __name__, url_prefix="/nlp")
 
 # Register available processors
 NLP_PROCESSORS = {
-    "spacy": spacy_get_exts,
-    "stanza": stanza_get_exts,
+    "spacy": spacy_get_ents,
+    "stanza": stanza_get_ents,
     "simcse_tokenize": sentence_tokenize,
     "simcse_rank": lambda batch_texts: rank_sentences(sentence_tokenize(batch_texts), batch_texts),
     "decontextualize": decontextualize,
+    "generate_question": generate_question
 }
 
 def handle_api_errors(func):

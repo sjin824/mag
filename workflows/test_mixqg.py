@@ -52,13 +52,13 @@ def get_response(api_url: str, json_data: dict):
 
 # Main function
 def main(
-    decont_url: str,
+    qg_url: str,
     documents: Generator[str, None, None]
 ):
     for document in documents:
         try:
-            deconted = get_response(decont_url, document)
-            print(f'tokenized:{deconted.text}')
+            questions = get_response(qg_url, document)
+            print(f'question generated: {questions.text}')
             
         except Exception as e:
             print(f"Error deconting document: {e}")
@@ -68,7 +68,7 @@ def main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Test APIs with documents.")
     
-    parser.add_argument("--decont_url", type=str, default="http://localhost:5002/nlp/decontextualize", help="The URL of the tokenizer API. Default: %(default)s")
+    parser.add_argument("--qg_url", type=str, default="http://localhost:5002/nlp/generate_question", help="The URL of the tokenizer API. Default: %(default)s")
     
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--doc", type=str, nargs='*', help="A string to test.")
@@ -78,9 +78,9 @@ if __name__ == "__main__":
     
     documents = read_docs(args.doc, args.doc_dir)
     main(
-        decont_url=args.decont_url,
+        qg_url=args.qg_url,
         documents=documents
     )
     
 # Conduct a test:
-# python3 workflows/test_decont.py --doc_dir "/home/sjin824/pyprojects/mag/tests/mock_data_for_decont"
+# python3 workflows/test_mixqg.py --doc_dir "/home/sjin824/pyprojects/mag/tests/mock_data_for_mixqg"

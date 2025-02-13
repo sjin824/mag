@@ -10,3 +10,5 @@ absl-py
 # numpy
 sentencepiece
 tensorflow_text
+
+transformers
