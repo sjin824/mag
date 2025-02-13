@@ -14,7 +14,7 @@ def get_phrases(tree, label):
     else:
         return results
 
-def stanza_get_exts(batch_texts, is_NP=True, is_VP=True, is_upos=True):
+def stanza_get_ents(batch_texts, is_NP=True, is_VP=True, is_upos=True):
     results = []
     for text in batch_texts:
         stanza_doc = stanza_nlp(text)

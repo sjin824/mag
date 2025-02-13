@@ -3,6 +3,7 @@ from typing import List, Union, Optional, AsyncGenerator
 import json
 import aiohttp
 import os
+from utils import entity_deduplicate
 
 API_URLS = {
     "spacy": "http://localhost:5002/nlp/spacy",
@@ -90,7 +91,7 @@ async def extract_entities_by_spacy(input_q: asyncio.Queue, output_q: asyncio.Qu
         joint_sentences_list = [" ".join(sentences) for sentences in _input["top_sentences"]]
         async for entities in call_api_streaming(API_URLS["spacy"], {"content": joint_sentences_list}):
             result = {**_input, "spacy_entities": entities["content"]}
-            # print(f"spacy api response: {result}\n")
+            print(f"spacy api response: {result}\n")
             await output_q.put(result)
         input_q.task_done()
 
@@ -102,7 +103,7 @@ async def extract_entities_by_stanza(input_q: asyncio.Queue, output_q: asyncio.Q
         joint_sentences_list = [" ".join(sentences) for sentences in _input["top_sentences"]]
         async for entities in call_api_streaming(API_URLS["stanza"], {"content": joint_sentences_list}):
             result = {**_input, "stanza_entities": entities["content"]}
-            # print(f"stanza api response: {result}\n")
+            print(f"stanza api response: {result}\n")
             await output_q.put(result)
         input_q.task_done()
 
@@ -122,24 +123,26 @@ async def merge_deduplicate(ner_q: asyncio.Queue, output_q: asyncio.Queue):
             temp[key]["stanza_entities"] = _input["stanza_entities"]
             
         if "spacy_entities" in temp[key] and "stanza_entities" in temp[key]:
-            spacy_entities = temp[key]["spacy_entities"]
-            stanza_entities = temp[key]["stanza_entities"]
+            spacy_ents_list = temp[key]["spacy_entities"]
+            stanza_ents_list = temp[key]["stanza_entities"]
             
-            assert len(spacy_entities) == len(stanza_entities), "Mismatch in article count between spaCy and Stanza."
-            merged_entities = []
-            for spacy_doc_entities, stanza_doc_entities in zip(spacy_entities, stanza_entities):
-                merged_doc_entities = list(dict.fromkeys(spacy_doc_entities + stanza_doc_entities))
-                merged_entities.append(merged_doc_entities)
+            assert len(spacy_ents_list) == len(stanza_ents_list), "Mismatch in article count between spaCy and Stanza."
+            merged_ents_list = []
+            # for spacy_ents, stanza_ents in zip(spacy_ents_list, stanza_ents_list):
+                # merged_ents = list(dict.fromkeys(spacy_doc_entities + stanza_doc_entities))
+            for ents_tuple in zip(spacy_ents_list, stanza_ents_list):
+                ner_result = entity_deduplicate(ents_tuple)
+                merged_ents_list.append(ner_result)
                     
             result = {
                 "file_id": _input["file_id"],
                 "batch_id": _input["batch_id"],
                 "top_sentences": _input["top_sentences"],
                 "content": _input["content"],
-                "entities": merged_entities
+                "entities": merged_ents_list
             }
             print(f"merge response: {result}\n")
-            await output_q.put(merged_entities)
+            await output_q.put(merged_ents_list)
             del temp[key]
         ner_q.task_done()
 
