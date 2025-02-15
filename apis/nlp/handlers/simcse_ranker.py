@@ -17,13 +17,14 @@ class SimcseRankerHandler(BaseHandler):
     def _process_logic(self, formatted_batch):
         results = []
         for sample in formatted_batch:
-            original_text = sample['original_text']
+            #original_text = sample['original_text']
+            original_text = sample
             
             tokenized = sent_tokenize(original_text)
             sim_scores = self.service.similarity(tokenized, [original_text])
             sim_scores = np.round(sim_scores, 2) # ?这里不一定对？
             ranked_indices = np.argsort(-sim_scores[:, 0]).tolist()
-            result.append([
+            results.append([
                 {"id": i, "sentence": tokenized_sentences[i], "similarity_score": sim_scores[i, 0]}
                 for i in ranked_indices
             ])
