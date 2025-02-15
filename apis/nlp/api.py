@@ -9,6 +9,7 @@ from handlers.spacy_ner import SpacyNERHandler
 from handlers.stanza_ner import StanzaNERHandler
 from handlers.decontextualizer import DecontextualizerHandler
 from handlers.mixqg_qg import MixQGHandler
+from handlers.qa2claim_cg import QA2ClaimHandler
 
 nlp_bp = Blueprint('nlp', __name__, url_prefix="/nlp")
 
@@ -19,6 +20,7 @@ HANDLERS = {
     "stanza_ner": StanzaNERHandler({"hello": "world"}),
     "decontextualize": DecontextualizerHandler({'model_path': '/app/tf_models/t5_base/1611267950'}),
     "mixqg_question_gen": MixQGHandler({"hello": "world"}),
+    "qa2claim_cg": QA2ClaimHandler({"hello": "world"}),
 }
 
 

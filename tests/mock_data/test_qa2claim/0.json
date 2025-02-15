@@ -1,0 +1,14 @@
+{
+    "content":[
+        {
+            "answers":["captital", "France", "Paris"], 
+            "questions":["What is the capital of France called?", "What country's capital is Paris?", "What is the capital of France?"]
+
+        },
+        {
+            "answers":["Gagarin", "sportsman", "ice hockey", "goalkeeper"],
+            "questions": ["Who was a keen sportsman?", "What was Gagarin's passion?", "What sport did Gagarin play as a goalkeeper?", "What position did Gagarin play in ice hockey?"]
+        }
+    ],
+    "batch": 2
+}

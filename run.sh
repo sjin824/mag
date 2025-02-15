@@ -69,5 +69,8 @@ docker run -d --gpus all -p 5002:5000 --name nlp_gpu_run nlp_api:1.0
 # 2.1 手动调用， 设置GPU，加载handler （应该改成load_all_tools）
 curl -X POST http://localhost:5002/nlp/load_tools
 
+# 2.2 Test apis
+source /home/sjin824/pyprojects/mag/tests/scripts/test_components.sh
+
 # 3 Compose启动 - 无GPU需求部分，如gateway。 -d代表后台运行
 docker compose up -d gateway

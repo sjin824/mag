@@ -19,8 +19,10 @@ class DecontextualizerHandler(BaseHandler):
         
     def load_service(self):
         model_path = self.config['model_path']
-        self.service = tf.saved_model.load(model_path, ["serve"])
-
+        imported = tf.saved_model.load(model_path, ["serve"])
+        self.service = lambda x: imported.signatures['serving_default'](tf.constant(x))['outputs'].numpy()
+            
+            
     def _formatter(self, batch: dict):
         formatted_batch = []
         for sample in batch:
@@ -37,11 +39,13 @@ class DecontextualizerHandler(BaseHandler):
         return formatted_batch
     
     # Decontextualization.
+    # def _process_logic(self, formatted_batch):
+    #     results = []
+    #     for sample in formatted_batch:
+    #         results.append(self.service([sample])[0].decode('utf-8')) 
+    #     return results
     def _process_logic(self, formatted_batch):
-        results = []
-        for sample in formatted_batch:
-            results.append(self.service.signatures['serving_default'](
-                tf.constant([sample]))['outputs'].numpy()[0].decode('utf-8')) 
-        return results
+        return [self.service([sample])[0].decode('utf-8') for sample in formatted_batch]
+
 
     
