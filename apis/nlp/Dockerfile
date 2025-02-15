@@ -17,8 +17,8 @@ RUN python -m spacy download en_core_web_lg
 COPY tf_models ./tf_models
 
 # Load spacy & stanza models
-COPY load_model.py ./
-RUN python load_model.py
+# COPY load_model.py ./
+# RUN python load_model.py
 
 # 拷贝代码
 COPY . .
