@@ -60,6 +60,7 @@ class BaseHandler(ABC):
         try:
             formatted_batch = self._formatter(batch)
             results = self._process_logic(formatted_batch)
+            self.logger.info(f"GPU allocated after processing: {torch.cuda.memory_allocated() / 1024**2} MB") # Only for logger test memory occupation
             self.logger.info(f"Processing complete.")
             return results
         except Exception as e:
