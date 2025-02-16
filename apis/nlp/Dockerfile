@@ -13,8 +13,8 @@ RUN python -m nltk.downloader punkt punkt_tab
 # 下载spaCy, stanza模型
 RUN python -m spacy download en_core_web_lg
 
-# Copy tf models: t5 for decontextualization
-COPY tf_models ./tf_models
+# Copy models: t5 for decontextualization
+COPY model_pts ./model_pts
 
 # Load spacy & stanza models
 # COPY load_model.py ./

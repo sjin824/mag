@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import gc
 import logging
 import os
+import torch
 
 class BaseHandler(ABC):
     def __init__(self, config: dict = None):
@@ -11,7 +12,8 @@ class BaseHandler(ABC):
         self._set_logger()
         
     def set_device(self, device):
-        self.device = device
+        self.device = torch.device(device)
+        print(self.device)# 仅用于测试
         
     def _set_logger(self):
         self.logger = logging.getLogger(self.__class__.__name__)

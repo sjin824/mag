@@ -1,4 +1,7 @@
 import json
+import torch
+from typing import Dict
+from handlers.base import BaseHandler
 
 MAX_BATCH_SIZE = 100
 
@@ -22,3 +25,16 @@ def batch_generator(content, batch_size, process_batch_fn):
             "batch_id": i,
             "response": process_batch_fn(batch_texts)
         }) + "\n"
+        
+def greedy_load_handlers(handlers_dict: Dict[str, BaseHandler]):
+    '''
+        Given a config dict of handlers, 
+        1. greedy set their services on all cuda;
+        2. load all services of them;
+        3. yield the loading status.
+    '''
+    device_type = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    for tool_name, handler in handlers_dict.items():
+        handler.set_device(device_type)
+        handler.load_service()
+        yield json.dumps({"message": f"{tool_name} loaded on device {str(handler.device)}"}) + "\n"

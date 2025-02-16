@@ -26,15 +26,14 @@ class MixQGHandler(BaseHandler):
     # Question generation based on 'context' and 'answers'.
     def _process_logic(self, formatted_batch):
         results = []
-        tokenizer = self.service["tokenizer"]
-        model = self.service["model"]
+        tokenizer, model= self.service["tokenizer"], self.service["model"]
         
         for sample in formatted_batch:
             input_ids = tokenizer(sample, return_tensors="pt", padding='longest',
                                     truncation=True, max_length=1024).input_ids.to(self.device)
             generated_ids = model.generate(input_ids, max_length=32, num_beams=4)
             output = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
-            results.append([output])
+            results.append(output) # 原：results.append(output[0])
         return results
 
     
