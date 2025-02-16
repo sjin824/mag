@@ -12,7 +12,7 @@ class SpacyNERHandler(BaseHandler):
     def _formatter(self, batch) -> List[List[str]]:
         return [i["sentences"] for i in batch]
     
-    def _process_logic(self, formatted_batch: List[List[str]]): # -> List[List[str]]:
+    def _process_logic(self, formatted_batch: List[List[str]]):
         '''
         Get a batch (list of lists of sentences) from the formatted batch
         for each sentence, get the noun chunks and entities as a list

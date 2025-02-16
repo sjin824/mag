@@ -21,10 +21,7 @@ def batch_generator(content, batch_size, process_batch_fn):
     """Generate batches and process them with the provided function."""
     for i, batch in enumerate(range(0, len(content), batch_size)):
         batch_texts = content[batch : batch + batch_size]
-        yield json.dumps({
-            "batch_id": i,
-            "response": process_batch_fn(batch_texts)
-        }) + "\n"
+        yield json.dumps({"batch_id": i, "response": process_batch_fn(batch_texts)}) + "\n"
         
 def greedy_load_handlers(handlers_dict: Dict[str, BaseHandler]):
     '''

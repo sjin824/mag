@@ -13,7 +13,7 @@ class BaseHandler(ABC):
         
     def set_device(self, device):
         self.device = torch.device(device)
-        print(self.device)# 仅用于测试
+        print(self.device) # Only use for testing
         
     def _set_logger(self):
         self.logger = logging.getLogger(self.__class__.__name__)

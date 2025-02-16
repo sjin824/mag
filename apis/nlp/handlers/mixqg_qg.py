@@ -16,11 +16,7 @@ class MixQGHandler(BaseHandler):
         for sample in batch:
             context = sample['context']
             answers = sample['answers'] # A list of entities.
-
-            formatted_sample = []
-            for answer in answers:
-                formatted_sample.append(f"{answer} \\n {context}")
-            formatted_batch.append(formatted_sample)
+            formatted_batch.append([f"{answer} \\n {context}" for answer in answers])
         return formatted_batch
     
     # Question generation based on 'context' and 'answers'.
@@ -33,7 +29,7 @@ class MixQGHandler(BaseHandler):
                                     truncation=True, max_length=1024).input_ids.to(self.device)
             generated_ids = model.generate(input_ids, max_length=32, num_beams=4)
             output = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
-            results.append(output) # 原：results.append(output[0])
+            results.append(output)
         return results
 
     

@@ -34,28 +34,30 @@ class DocNLIHandler(BaseHandler):
     def entailment_score(self, text1, text2):
         tokenizer, model = self.service["tokenizer"], self.service["model"]
         
-        encoded_ctx = tokenizer.encode(text1)[:-1]          # remove [SEP] # 这什么名，改一下吧
+        encoded_ctx = tokenizer.encode(text1)[:-1]          # remove [SEP]
         encoded_correction = tokenizer.encode(text2)[1:]    # remove [CLS]
         encoded_ctx_truncated = encoded_ctx[:512 - 1 - len(encoded_correction)]  # - [SEP] - encoded_correction
         
         input_ids = torch.LongTensor(encoded_ctx_truncated + [tokenizer.sep_token_id] + encoded_correction).unsqueeze(0).to(self.device)
-        # attention_mask = torch.LongTensor([1] * len(input_ids)).unsqueeze(0).to(self.device)
-        attention_mask = torch.ones_like(input_ids, dtype=torch.long) # gpt给的建议
+        attention_mask = torch.ones_like(input_ids, dtype=torch.long)
         inputs = {'input_ids': input_ids, 'input_mask': attention_mask}
         
         with torch.no_grad():
-            # self.model.eval()
-            # logits = self.model(**inputs)
             logits = model(**inputs)
             probs = torch.nn.Softmax(dim=1)(logits)
             correct_prob = probs[0][0].item()
         return correct_prob
     
-    # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     def _process_logic(self, formatted_batch):
+        '''
+        DocNLI entailment ranking.
+        Return a embedded list, 
+            outbound: samples from the batch; 
+            inbound: top 5 sentences with id and scores
+        '''
         results = []
         for sample in formatted_batch:
-            context, candidates = sample['context'], sample['candidates'] # 名字和上层输入不对应
+            context, candidates = sample['context'], sample['candidates']
             entailment_scores = [self.entailment_score(context, candidate) for candidate in candidates]
             
             ranked_indices = np.argsort(-np.array(entailment_scores)).tolist()[:5] # 取前5个最大值的索引
@@ -64,7 +66,7 @@ class DocNLIHandler(BaseHandler):
                 for i in ranked_indices
             ])
         return results
-        # #双层列表，第一层是batch里的samples，最内层是score
+        
 
 '''
 From https://github.com/salesforce/DocNLI/blob/main/Code/DocNLI/test_on_docNLI_RoBERTa.py
