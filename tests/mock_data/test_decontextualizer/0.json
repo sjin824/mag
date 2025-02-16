@@ -1,4 +1,5 @@
 {
+    "batch_size": 2,
     "content": [
         {
             "paragraph": [
@@ -27,7 +28,6 @@
             "target_sentence_idx": 4
         }
         
-    ],
-    "batch": 2
+    ]
   }
   

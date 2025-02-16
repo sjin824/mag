@@ -23,7 +23,6 @@ HANDLERS = {
     "qa2claim_cg": QA2ClaimHandler({"hello": "world"}),
 }
 
-
 def handle_api_errors(func):
     """Decorator to handle API errors uniformly."""
     @wraps(func)
@@ -36,7 +35,7 @@ def handle_api_errors(func):
             return jsonify({"error": f"Unexpected server error: {e}"}), 500
     return wrapper
     
-@nlp_bp.route("/load_tools", methods=["POST"])
+@nlp_bp.route("/load_all_tools", methods=["POST"])
 def load_handlers():
     for handler in HANDLERS.values():
         handler.set_device("cuda" if torch.cuda.is_available() else "cpu") # Must set device before load service.

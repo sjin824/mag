@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import gc
 import logging
+import os
 
 class BaseHandler(ABC):
     def __init__(self, config: dict = None):
@@ -16,12 +17,20 @@ class BaseHandler(ABC):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.setLevel(logging.INFO)
         if not self.logger.handlers:
-            handler = logging.StreamHandler()
-            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-            handler.setFormatter(formatter)
-            self.logger.addHandler(handler)
-        # logging.getLogger("werkzeug").setLevel(logging.WARNING)
-        
+            # stream_handler = logging.StreamHandler()
+            # stream_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            # stream_handler.setFormatter(stream_formatter)
+            # self.logger.addHandler(stream_handler)
+            
+            log_dir = "/app/logs" # Inside the docker container
+            os.makedirs(log_dir, exist_ok=True)
+            log_file = os.path.join(log_dir, f"{self.__class__.__name__}.log")
+            
+            file_handler = logging.FileHandler(log_file, mode="a")
+            file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            file_handler.setFormatter(file_formatter)
+            self.logger.addHandler(file_handler)
+            
     def release_resources(self):
         del self.service
         self.service = None

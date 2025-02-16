@@ -1,4 +1,5 @@
 {
+    "batch_size": 2,
     "content":[
         {
             "answers":["captital", "France", "Paris"], 
@@ -9,6 +10,5 @@
             "answers":["Gagarin", "sportsman", "ice hockey", "goalkeeper"],
             "questions": ["Who was a keen sportsman?", "What was Gagarin's passion?", "What sport did Gagarin play as a goalkeeper?", "What position did Gagarin play in ice hockey?"]
         }
-    ],
-    "batch": 2
+    ]
 }

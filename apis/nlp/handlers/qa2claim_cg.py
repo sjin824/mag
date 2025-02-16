@@ -13,7 +13,7 @@ class QA2ClaimHandler(BaseHandler):
             "model": AutoModelForSeq2SeqLM.from_pretrained('khhuang/zerofec-qa2claim-t5-base').to(self.device)
         }
         
-    def _formatter(self, batch: dict):
+    def _formatter(self, batch):
         formatted_batch = []
         for sample in batch:
             questions = sample['questions']
