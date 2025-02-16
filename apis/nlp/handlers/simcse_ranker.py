@@ -11,21 +11,26 @@ class SimcseRankerHandler(BaseHandler):
     def load_service(self):
         self.service = SimCSE("princeton-nlp/sup-simcse-roberta-large")
         
-    def _formatter(self, batch: dict):
-        return batch
+    def _formatter(self, batch) -> List[str]:
+        return [i["full_text"] for i in batch]
     
-    def _process_logic(self, formatted_batch):
+    def _process_logic(self, formatted_batch: List[str]): # -> List[List[dict]]
+        '''
+        Get a list of full texts from the formatted batch
+        for each full text, tokenize as a list of sentences
+        for each sentence, get the similarity score with the full text itself
+        return the list of lists of dictionaries, each dictionary stands for a sentence
+        '''
         results = []
-        for sample in formatted_batch:
-            #original_text = sample['original_text']
-            original_text = sample
+        for full_text in formatted_batch: # full_text should be a document as a string
+            tokenized = sent_tokenize(full_text) # should be a list of strings
             
-            tokenized = sent_tokenize(original_text)
-            sim_scores = self.service.similarity(tokenized, [original_text])
-            sim_scores = np.round(sim_scores, 2) # ?这里不一定对？
-            ranked_indices = np.argsort(-sim_scores[:, 0]).tolist()
+            sim_scores = self.service.similarity(tokenized, [full_text])
+            sim_scores = sim_scores.astype(float).tolist()
+            
+            ranked_indices = np.argsort(-np.array(sim_scores)).ravel().tolist()
             results.append([
-                {"id": i, "sentence": tokenized_sentences[i], "similarity_score": sim_scores[i, 0]}
+                {"id": i, "sentence": tokenized[i], "similarity": format(sim_scores[i][0], ".2f")}
                 for i in ranked_indices
             ])
         return results

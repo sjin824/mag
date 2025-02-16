@@ -23,7 +23,7 @@ class DecontextualizerHandler(BaseHandler):
         self.service = lambda x: imported.signatures['serving_default'](tf.constant(x))['outputs'].numpy()
             
             
-    def _formatter(self, batch: dict):
+    def _formatter(self, batch):
         formatted_batch = []
         for sample in batch:
             paragraph = sample['paragraph']
@@ -39,11 +39,6 @@ class DecontextualizerHandler(BaseHandler):
         return formatted_batch
     
     # Decontextualization.
-    # def _process_logic(self, formatted_batch):
-    #     results = []
-    #     for sample in formatted_batch:
-    #         results.append(self.service([sample])[0].decode('utf-8')) 
-    #     return results
     def _process_logic(self, formatted_batch):
         return [self.service([sample])[0].decode('utf-8') for sample in formatted_batch]
 

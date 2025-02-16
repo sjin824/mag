@@ -7,11 +7,11 @@ def validate_request(data):
     if not data:
         raise ValueError("Request body must be JSON.")
     content = data.get("content", [])
-    batch_size = data.get("batch", 10)
+    batch_size = data.get("batch_size", 1)
     if not isinstance(content, list) or not content:
-        raise ValueError("Input must be a list of strings, and cannot be empty.")
-    if not isinstance(batch_size, int) or batch_size <= 0 or batch_size > MAX_BATCH_SIZE:
-        raise ValueError(f"Batch size must be a positive integer less than {MAX_BATCH_SIZE}.")
+        raise ValueError("The api received an empty input content.")
+    if not isinstance(batch_size, int) or batch_size < 1 or batch_size > MAX_BATCH_SIZE:
+        raise ValueError(f"Batch size must be an integer between 1 and {MAX_BATCH_SIZE}.")
     return content, batch_size
 
 def batch_generator(content, batch_size, process_batch_fn):
@@ -20,6 +20,5 @@ def batch_generator(content, batch_size, process_batch_fn):
         batch_texts = content[batch : batch + batch_size]
         yield json.dumps({
             "batch_id": i,
-            "content": process_batch_fn(batch_texts)
+            "response": process_batch_fn(batch_texts)
         }) + "\n"
-    # yield json.dumps({"status": "DONE"}) + "\n"

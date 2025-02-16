@@ -62,12 +62,14 @@ docker compose build --no-cache # --no-cache 可以确保每一步都重新拉�
 # 需要确保docker-compose.yml文件中的simcse_api有指定镜像名image: simcse_api:1.0
 # --name指定一个容器的自定义名称，不然会变成系统默认名
 
-docker run -d --gpus all -p 5002:5000 --name nlp_gpu_run nlp_api:1.0
+# 不需要日志本地持久化就去掉-v参数
+docker run -d --gpus all -p 5002:5000 -v /home/sjin824/pyprojects/mag/apis/nlp/logs:/app/logs --name nlp_gpu_run nlp_api:1.0
+
 # docker run -d --gpus all -p 5003:5000 --name presumm_gpu_run presumm_api:1.0
 # docker run -d --gpus all -p 5004:5000 --name simcse_gpu_run simcse_api:1.0
 
 # 2.1 手动调用， 设置GPU，加载handler （应该改成load_all_tools）
-curl -X POST http://localhost:5002/nlp/load_tools
+curl -X POST http://localhost:5002/nlp/load_all_tools
 
 # 2.2 Test apis
 source /home/sjin824/pyprojects/mag/tests/scripts/test_components.sh
