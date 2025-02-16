@@ -1,0 +1,15 @@
+
+{
+    "batch_size": 2,
+    "content": [
+        {
+            "context": "The capital of France is Paris.",
+            "candidates": ["The capital of France is called captital.", "France's capital is Paris.", "Paris is the capital of France."]
+        },
+        {   
+            "context": "Gagarin was a keen sportsman and played ice hockey as a goalkeeper.",
+            "candidates": ["Gagarin was a keen sportsman.", "Gagarin's passion was sportsman.", "Gagarin played ice hockey as a goalkeeper.", "Gagarin played the position of goalkeeper in ice hockey."]
+        }
+    ]
+}
+

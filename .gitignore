@@ -1,3 +1,6 @@
 /venv
-/apis/nlp/tf_models
+/apis/nlp/model_pts
 /apis/nlp/logs
+**/__pycache__/
+*.pyc
+*.pyo

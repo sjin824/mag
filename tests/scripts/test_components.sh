@@ -7,7 +7,8 @@ urls=(
     "stanza_ner" \
     "decontextualize" \
     "mixqg_question_gen" \
-    "qa2claim_cg"
+    "qa2claim_cg"\
+    "docnli"
 )
 
 test_dir="/home/sjin824/pyprojects/mag/tests/mock_data/"
@@ -17,7 +18,8 @@ test_dir_paths=(
     "test_stanza" \
     "test_decontextualizer" \
     "test_mixqg" \
-    "test_qa2claim"
+    "test_qa2claim"\
+    "test_docnli"
 )
 
 for i in "${!urls[@]}"; do  
